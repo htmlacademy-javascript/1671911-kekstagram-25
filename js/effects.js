@@ -1,5 +1,7 @@
 import '../nouislider/nouislider.js';
 
+import {setDefaultScale} from './/scale.js';
+
 const picturePreviewElement = document.querySelector('.img-upload__preview');
 const imgUploadEffects = document.querySelector('.img-upload__effects');
 const imgUploadEffectsLevel = document.querySelector('.img-upload__effect-level');
@@ -7,9 +9,6 @@ const imgUploadEffectsLevel = document.querySelector('.img-upload__effect-level'
 const sliderElement = document.querySelector('.effect-level__slider');
 
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
-
-//const effectContainerElement = document.querySelector('.effect-level');
-//const effectLevelValueElement = document.querySelector('.effect-level__value');
 
 const cancelButtonElement = document.querySelector('.img-upload__cancel');
 
@@ -144,6 +143,7 @@ const createSlider = (min, max, start, step) => {
 };
 
 imgUploadEffects.addEventListener('click', (evt) => {
+
   if(evt.target.closest('li').querySelector('input').value !== 'none' ){
     imgUploadEffectsLevel.classList.remove('hidden');
     sliderElement.noUiSlider.updateOptions(
@@ -157,12 +157,19 @@ imgUploadEffects.addEventListener('click', (evt) => {
     picturePreviewElement.classList.add('effects__preview--none');
     imgUploadEffectsLevel.classList.add('hidden');
   }
+  setDefaultScale();
 });
 
 
 cancelButtonElement.addEventListener('click', () =>{
   imgUploadOverlay.classList.add('hidden');
 } );
+
+document.addEventListener('keydown', (evt) => {
+  if(evt.key === 'Escape') {
+    imgUploadOverlay.classList.add('hidden');
+  }
+});
 
 export{
   createSlider
